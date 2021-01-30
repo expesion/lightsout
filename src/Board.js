@@ -40,11 +40,15 @@ class Board extends Component {
     flipCell(y, x - 1);
     flipCell(y + 1, x);
     flipCell(y - 1, x);
-    let hasWon = false;
+    let hasWon = board.every((row) => row.every((cell) => !cell));
+
     this.setState({ board, hasWon });
   }
 
   render() {
+    if (this.state.hasWon) {
+      return <h1>You Won!</h1>;
+    }
     let tblBoard = [];
     for (let y = 0; y < this.props.nrows; y++) {
       let row = [];
@@ -60,9 +64,16 @@ class Board extends Component {
       tblBoard.push(<tr key={y}>{row}</tr>);
     }
     return (
-      <table className="Board">
-        <tbody>{tblBoard}</tbody>
-      </table>
+      <div>
+        <div className="Board-title">
+          <div className="neon">lights</div>
+          <div className="flux">Out</div>
+        </div>
+
+        <table className="Board">
+          <tbody>{tblBoard}</tbody>
+        </table>
+      </div>
     );
   }
 }
